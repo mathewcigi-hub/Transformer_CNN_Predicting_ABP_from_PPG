@@ -93,45 +93,39 @@ class CustomCheckpoint(tf.keras.callbacks.Callback):
 if __name__ == "__main__":
     print("Loading dataset...")
     
-    # Load all .json file names
+ 
     file_list = [f for f in os.listdir(DATASET_PATH) if f.endswith('.json')]
 
-    # Split the dataset into training and validation sets (80-20 split)
+    #(80-20 split)
     train_files, val_files = train_test_split(file_list, test_size=0.2, random_state=42)
     print(f"Training set size: {len(train_files)}")
     print(f"Validation set size: {len(val_files)}")
 
-    # Initialize data generators
     train_generator = DataGenerator(train_files, DATASET_PATH, batch_size=16, input_size=1250)
     val_generator = DataGenerator(val_files, DATASET_PATH, batch_size=16, input_size=1250, shuffle=False)
-
-    # Initialize the model
     print("Building model...")
     input_signal = tf.keras.layers.Input(shape=(1250, 1), name="PPG_Input")
     model = Transformer_model(input_signal) 
     print(model)
 
-    # Compile the model
     model.compile(
         optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
         loss={"tf.reshape_1": "mae"},
         metrics=["mse", "mae", mae_percentage]
     )
 
-    # Create checkpoint directory
-    os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-    # Checkpoint for saving model and optimizer state
+    os.makedirs(CHECKPOINT_DIR, exist_ok=True)
     checkpoint = tf.train.Checkpoint(model=model, optimizer=model.optimizer)
     checkpoint_prefix = os.path.join(CHECKPOINT_DIR, "ckpt")
 
-    # Try to load the latest checkpoint
+
     latest_checkpoint = tf.train.latest_checkpoint(CHECKPOINT_DIR)
     if latest_checkpoint:
         print("Restoring from checkpoint:", latest_checkpoint)
         checkpoint.restore(latest_checkpoint)
 
-        # Extract epoch number from checkpoint file name
+
         try:
             epoch_number = int(latest_checkpoint.split('-')[-1]) 
             initial_epoch = epoch_number + 1  # Start from the next epoch
@@ -140,10 +134,9 @@ if __name__ == "__main__":
     else:
         initial_epoch = 0
 
-    # Custom checkpoint callback (using the modified version)
     checkpoint_callback = CustomCheckpoint(checkpoint, checkpoint_prefix)
 
-    # Callbacks (removed best_model_checkpoint)
+    # Callbacks
     early_stopping = EarlyStopping(monitor="val_loss", patience=20, restore_best_weights=True)
     reduce_lr_callback = ReduceLROnPlateau(monitor="val_loss", factor=0.1, patience=10, verbose=1)
 
@@ -157,7 +150,7 @@ if __name__ == "__main__":
         callbacks=[early_stopping, reduce_lr_callback, checkpoint_callback]  # Removed best_model_checkpoint
     )
 
-    # Save the final model (optional, as the best model is already saved)
+    # Save the final model 
     print("Saving final model...")
     model.save(FINAL_MODEL_PATH, overwrite=True)
 
