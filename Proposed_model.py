@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import Dense, LayerNormalization, Dropout, Input, Reshape, Flatten, Conv2D, MaxPooling2D, BatchNormalization
 from tensorflow.keras.models import Model
 import numpy as np
-# Custom Layer for Weight Multiplication
+
 class WeightMultiplicationLayer(tf.keras.layers.Layer):
     def __init__(self, multiplication_weights, **kwargs):
         super(WeightMultiplicationLayer, self).__init__(**kwargs)
@@ -18,11 +18,11 @@ class WeightMultiplicationLayer(tf.keras.layers.Layer):
         })
         return config
     
-# Function to create positional encoding
+
 def positional_encoding(position, d_model):
     angle_rads = np.arange(position)[:, np.newaxis] * np.arange(d_model)[np.newaxis, :] / np.power(10000, (2 * (np.arange(d_model) // 2)) / np.float32(d_model))
-    angle_rads[:, 0::2] = np.sin(angle_rads[:, 0::2])  # Apply sin to even indices in the array
-    angle_rads[:, 1::2] = np.cos(angle_rads[:, 1::2])  # Apply cos to odd indices in the array
+    angle_rads[:, 0::2] = np.sin(angle_rads[:, 0::2]) 
+    angle_rads[:, 1::2] = np.cos(angle_rads[:, 1::2])  
     return tf.constant(angle_rads[np.newaxis, ...], dtype=tf.float32)
 
 
