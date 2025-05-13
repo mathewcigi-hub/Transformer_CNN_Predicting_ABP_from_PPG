@@ -41,7 +41,7 @@ class DataGenerator(tf.keras.utils.Sequence):
                     ppg_batch.append(data['PPG_values'])
                     abp_batch.append(data['ABP_values'])
 
-        # Convert to NumPy arrays and reshape
+
         ppg_batch = np.array(ppg_batch, dtype=np.float32)[..., np.newaxis]
         abp_batch = np.array(abp_batch, dtype=np.float32)[..., np.newaxis].reshape(self.batch_size, 1, 1250, 1)
 
@@ -51,12 +51,12 @@ class DataGenerator(tf.keras.utils.Sequence):
         if self.shuffle:
             np.random.shuffle(self.indexes)
 
-# Custom MAE percentage metric
+
 def mae_percentage(y_true, y_pred):
     epsilon = tf.keras.backend.epsilon()
     return tf.reduce_mean(tf.abs(y_true - y_pred) / (tf.abs(y_true) + epsilon)) * 100
 
-# Custom Checkpoint Callback (modified to save only the best weights)
+
 class CustomCheckpoint(tf.keras.callbacks.Callback):
     def __init__(self, checkpoint, checkpoint_prefix):
         super(CustomCheckpoint, self).__init__()
@@ -70,9 +70,9 @@ class CustomCheckpoint(tf.keras.callbacks.Callback):
             print(f"\nImproved val_mae from {self.best_val_mae:.4f} to {current_val_mae:.4f}. Saving checkpoint.")
             self.best_val_mae = current_val_mae
 
-            # Remove old checkpoint files before saving new ones
+
             for filename in os.listdir(CHECKPOINT_DIR):
-                if filename.startswith("ckpt"):  # Check if it's a checkpoint file
+                if filename.startswith("ckpt"):  
                     file_path = os.path.join(CHECKPOINT_DIR, filename)
                     try:
                         os.remove(file_path)
