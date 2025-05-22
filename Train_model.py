@@ -146,8 +146,8 @@ if __name__ == "__main__":
         train_generator,
         validation_data=val_generator,
         epochs=400,
-        initial_epoch=initial_epoch,  # Pass the initial_epoch here
-        callbacks=[early_stopping, reduce_lr_callback, checkpoint_callback]  # Removed best_model_checkpoint
+        initial_epoch=initial_epoch,  
+        callbacks=[early_stopping, reduce_lr_callback, checkpoint_callback] 
     )
 
     # Save the final model 
