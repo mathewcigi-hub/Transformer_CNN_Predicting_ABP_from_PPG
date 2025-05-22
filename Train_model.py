@@ -89,14 +89,14 @@ class CustomCheckpoint(tf.keras.callbacks.Callback):
 
 
 
-# Main execution block
+
 if __name__ == "__main__":
     print("Loading dataset...")
     
  
     file_list = [f for f in os.listdir(DATASET_PATH) if f.endswith('.json')]
 
-    #(80-20 split)
+
     train_files, val_files = train_test_split(file_list, test_size=0.2, random_state=42)
     print(f"Training set size: {len(train_files)}")
     print(f"Validation set size: {len(val_files)}")
@@ -136,7 +136,7 @@ if __name__ == "__main__":
 
     checkpoint_callback = CustomCheckpoint(checkpoint, checkpoint_prefix)
 
-    # Callbacks
+ 
     early_stopping = EarlyStopping(monitor="val_loss", patience=20, restore_best_weights=True)
     reduce_lr_callback = ReduceLROnPlateau(monitor="val_loss", factor=0.1, patience=10, verbose=1)
 
