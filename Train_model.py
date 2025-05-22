@@ -6,12 +6,12 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from Proposed_model import Transformer_model  # Import your model 
 
-# Paths 
+
 DATASET_PATH = r"E:\MS_IITM\Conference_data_2025\For_paper2\Train_data_part1\Train_json_sample"  # Update to your .json files directory
 CHECKPOINT_DIR = r"D:\MS_IITM\Conference paper\Conference 2025\MODELS\Conference_2\Transformer_encoder_CNN_decoder\Model4_Tansformer_encoder_CNN_decoder_with_model_save\checkpoints"
 FINAL_MODEL_PATH = r"D:\MS_IITM\Conference paper\Conference 2025\MODELS\Conference_2\Transformer_encoder_CNN_decoder\Model4_Tansformer_encoder_CNN_decoder_with_model_save\final_mode\final_model.h5"
 
-# Data Generator Class
+
 class DataGenerator(tf.keras.utils.Sequence):
     def __init__(self, file_list, dataset_path, batch_size, input_size, shuffle=True):
         self.file_list = file_list
