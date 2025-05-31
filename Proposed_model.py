@@ -26,7 +26,7 @@ def positional_encoding(position, d_model):
     return tf.constant(angle_rads[np.newaxis, ...], dtype=tf.float32)
 
 
-# Transformer Encoder Block
+
 def transformer_encoder(input_tensor, d_model, num_heads, ff_dim, dropout_rate=0.1):
     attn_output = tf.keras.layers.MultiHeadAttention(num_heads=num_heads, key_dim=d_model)(input_tensor, input_tensor)
     attn_output = Dropout(dropout_rate)(attn_output)
