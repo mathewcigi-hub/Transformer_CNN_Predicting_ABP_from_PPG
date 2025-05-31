@@ -150,7 +150,7 @@ if __name__ == "__main__":
         callbacks=[early_stopping, reduce_lr_callback, checkpoint_callback] 
     )
 
-    # Save the final model 
+    
     print("Saving final model...")
     model.save(FINAL_MODEL_PATH, overwrite=True)
 
