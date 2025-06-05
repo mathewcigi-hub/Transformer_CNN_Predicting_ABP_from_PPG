@@ -53,16 +53,10 @@ def cnn_decoder(input_tensor):
 def cnn_decoder(input_tensor):
     #print("\n\n\n\n\n\n\n")
     #print("Input Tensor:", input_tensor.shape)
-    
-    # Apply a Conv2D layer with a kernel size of (2, 2)
+
     conv1 = Conv2D(64, (5, 5), activation='relu', padding='same')(input_tensor)
     #print("conv1:", conv1.shape)
-    
-    # Apply MaxPooling2D with pool size (1, 2) to keep the first dimension and reduce the second
     pool1 = MaxPooling2D(pool_size=(1, 2))(conv1)
-
-    # Apply a Conv2D layer with a kernel size of (2, 2)
-    #conv2 = Conv2D(128, (5, 5), activation='relu', padding='same')(pool1)
     conv2 = Conv2D(128, (1, 5), activation='relu', padding='valid')(pool1) 
     #pool2 = MaxPooling2D(pool_size=(1, 3))(conv2)
 
