@@ -39,7 +39,7 @@ def transformer_encoder(input_tensor, d_model, num_heads, ff_dim, dropout_rate=0
 
     return out2
 
-# CNN Decoder
+
 '''
 def cnn_decoder(input_tensor):
 
