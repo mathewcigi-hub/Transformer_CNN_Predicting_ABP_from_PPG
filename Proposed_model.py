@@ -55,7 +55,6 @@ def cnn_decoder(input_tensor):
     #print("Input Tensor:", input_tensor.shape)
 
     conv1 = Conv2D(64, (5, 5), activation='relu', padding='same')(input_tensor)
-    #print("conv1:", conv1.shape)
     pool1 = MaxPooling2D(pool_size=(1, 2))(conv1)
     conv2 = Conv2D(128, (1, 5), activation='relu', padding='valid')(pool1) 
     
